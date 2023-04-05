@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
     const runGame = setInterval(gameLoop, 60); 
     const pieceFunction = setInterval(scrollPiece, 60); 
-    detectBorder(); 
+    
 
 })
 
@@ -36,7 +36,8 @@ class tetrimino {
         this.y = y; 
         this.width = width; 
         this.height = height; 
-        this.landed = true; 
+        this.landed = false; 
+        this.alive = true; 
         this.render = function() {
 
             ctx.strokeStyle = randomColor; 
@@ -71,19 +72,23 @@ function scrollPiece() {
       }
       else if (piece1.y + piece1.height > game.height) {
         piece1.y = game.height - (piece1.height + 2);
+        piece1.landed = true; 
       }
 }
 
 // =================MOVEMENT HANDLER======================== //
 function movementHandler(e){
     console.log('Movement:', e.key); 
-
-    if (e.key === 'a') {
+    if (piece1.landed === false){
+        if (e.key === 'a') {
         piece1.x -= 20; 
-    } else if (e.key === 'd') {
+        } else if (e.key === 'd') {
         piece1.x += 20; 
-    } else if (e.key === 's') {
+        } else if (e.key === 's') {
         piece1.y += 12; 
+        } else if (e.key === ' ') {
+            piece1.y = game.height - (piece1.height + 2); 
+        }
     }
 }
 
