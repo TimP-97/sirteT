@@ -2,12 +2,11 @@
 const game = document.getElementById('game'); 
 const ctx = game.getContext('2d'); 
 
-
-//setting up the pieces 
-let piece1; 
-let piece2; 
-let piece3; 
-let piece4; 
+//game variables 
+// let lives = 5; 
+// let gameTime = 0; 
+// let winCondition = false; 
+// let loseCondition = false; 
 
 //main event listener
 window.addEventListener('DOMContentLoaded', function() {
@@ -69,17 +68,19 @@ const zagMatrix = [
 
 const sqMatrix = [
     [1, 1, 0], 
-    [1, 1, 0],
+    [2, 2, 0],
     [0, 0, 0],
 ];
 
 function render(matrix) {
     matrix.forEach((row, y) => {
     row.forEach((value, x) => {
-        if (value !== 0) {
-            ctx.strokeStyle = randomColor;
+        if (value !== 0 && value !== 2) {
+            ctx.strokeStyle = 'white';
             ctx.strokeRect(x * 30 + 200, y * 30 + 10, 30, 30);  
-          
+        } else if (value !== 0 && value !== 1) {
+            ctx.strokeStyle = 'red';
+            ctx.strokeRect(x * 30 + 200, y * 30 + 10, 30, 30);  
         }
     }); 
 }); 
@@ -88,6 +89,9 @@ function render(matrix) {
 
 const piecesArray = [
     tMatrix, 
+    zigMatrix,
+    zagMatrix,
+    sqMatrix,
 ]; 
 
 console.log(piecesArray); 
@@ -100,6 +104,10 @@ function gameLoop() {
 
     document.addEventListener('keydown', movementHandler); 
 }
+
+//variable that pulls a random piece 
+
+let randomPieceIndex = 
 
 // auto-scrolling and border hit detection
 function scrollPiece(arr) {
