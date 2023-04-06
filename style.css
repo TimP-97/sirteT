@@ -22,8 +22,8 @@ body {
 
 #top-left {
  order: 1;
- width: 75px; 
- height: 75px; 
+ width: 100px; 
+ height: 100px; 
  border: 3px solid white; 
  border-radius: 12px;
  font-family: 'Permanent Marker', cursive;
@@ -35,8 +35,8 @@ body {
 
 #top-right {
   order: 3;
-  width: 75px; 
-  height: 75px; 
+  width: 100px; 
+  height: 100px; 
   border: 3px solid white; 
   border-radius: 12px;
   font-family: 'Permanent Marker', cursive;

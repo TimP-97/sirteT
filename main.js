@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', function() {
 
 
     const runGame = setInterval(gameLoop, 60); 
-    // const pieceFunction = setInterval(scrollPiece, 60); 
+    const pieceFunction = setInterval(scrollPiece, 60); 
     
 
 })
@@ -49,21 +49,21 @@ console.log(randomColor);
 
 //creating the pieces 
 const tMatrix = [
+    [1, 1, 2],
+    [0, 2, 0],
     [0, 0, 0],
-    [1, 1, 1],
-    [0, 1, 0],
 ]; 
 
 const zigMatrix = [
-    [0, 1, 0],
-    [1, 1, 0], 
+    [0, 2, 0],
+    [1, 2, 0], 
     [1, 0, 0],
 ]; 
 
 const zagMatrix = [
-    [0, 1, 0], 
-    [0, 1, 1], 
-    [0, 0, 1],
+    [1, 0, 0], 
+    [1, 2, 0], 
+    [0, 2, 0],
 ]; 
 
 const sqMatrix = [
@@ -72,19 +72,34 @@ const sqMatrix = [
     [0, 0, 0],
 ];
 
-function render(matrix) {
+const invTMatrix = [
+    [2, 2, 1], 
+    [0, 1, 0], 
+    [0, 0, 0],
+]; 
+
+
+
+function render(matrix, offset) {
     matrix.forEach((row, y) => {
     row.forEach((value, x) => {
         if (value !== 0 && value !== 2) {
             ctx.strokeStyle = 'white';
-            ctx.strokeRect(x * 30 + 200, y * 30 + 10, 30, 30);  
+            ctx.strokeRect(x * 30 + offset.x, y * 30 + offset.y, 30, 30);  
         } else if (value !== 0 && value !== 1) {
             ctx.strokeStyle = 'red';
-            ctx.strokeRect(x * 30 + 200, y * 30 + 10, 30, 30);  
+            ctx.strokeRect(x * 30 + offset.x, y * 30 + offset.y, 30, 30);  
         }
     }); 
 }); 
-}
+// if (player.matrix.randomPiece === zigMatrix || player.matrix.randomPiece === zagMatrix) {
+//     player.width === 60; 
+//     player.height === 90; 
+// } else if (player.matrix.randomPiece == tMatrix) {
+//     player.width == 120; 
+//     player.height == 60; 
+// }
+}; 
 
 
 const piecesArray = [
@@ -92,60 +107,89 @@ const piecesArray = [
     zigMatrix,
     zagMatrix,
     sqMatrix,
+    invTMatrix,
 ]; 
 
 console.log(piecesArray); 
+
+//variable that pulls a random piece from an array 
+let randomPieceIndex = Math.floor(Math.random() * (piecesArray.length)); 
+let randomPiece = piecesArray[randomPieceIndex]; 
+
+//setting up the player variable that will let me control the piece later
+let player = {
+    pos: {x: 175, y: 5}, 
+    matrix: randomPiece,
+    landed: false,
+    width: 60, 
+    height: 60
+}; 
+
+
+
+
 
 function gameLoop() {
 
     ctx.clearRect(0, 0, game.width, game.height); 
 
-    render(sqMatrix);  
+    render(player.matrix, player.pos);  
 
     document.addEventListener('keydown', movementHandler); 
+
+    spawnNewPiece(); 
 }
 
-//variable that pulls a random piece 
 
-let randomPieceIndex = 
+
 
 // auto-scrolling and border hit detection
-function scrollPiece(arr) {
+function scrollPiece() {
 
-    for (let i = 0; i < arr.length; i++){
-    arr[i].y += 3; 
+   
+    player.pos.y += 3; 
 
-    if (piece1.x < 0) {
-        piece1.x = 0 + 2;
+    if (player.pos.x < 0) {
+        player.pos.x = 0 + 2;
       }
-      else if (piece1.x + piece1.width > game.width) {
-        piece1.x = game.width - (piece1.width + 2);
+      else if (player.pos.x + player.width > game.width) {
+        player.pos.x = game.width - (player.width + 2);
       }
-      else if (piece1.y < 0) {
-        piece1.y = 0 + 2;
+      else if (player.pos.y < 0) {
+        player.pos.y = 0 + 2;
       }
-      else if (piece1.y + piece1.height > game.height) {
-        piece1.y = game.height - (piece1.height + 2);
-        piece1.landed = true; 
+      else if (player.pos.y + player.height > game.height) {
+        player.pos.y = game.height - (player.height + 2);
+        player.landed = true; 
       }
-}
+
 }
 
 // =================MOVEMENT HANDLER======================== //
 function movementHandler(e){
     console.log('Movement:', e.key); 
-    if (piece1.landed === false){
+    if (player.landed === false){
         if (e.key === 'a') {
-        piece1.x -= 20; 
+        player.pos.x -= 30; 
         } else if (e.key === 'd') {
-        piece1.x += 20; 
+        player.pos.x += 30; 
         } else if (e.key === 's') {
-        piece1.y += 12; 
+        player.pos.y += 12; 
         } else if (e.key === ' ') {
-            piece1.y = game.height - (piece1.height + 2); 
-        }
+            player.pos.y = game.height - (player.height + 2); 
+            player.landed === true; 
+        } return player.landed; 
     }
-}
+};        
+
+
+// spawning in a new piece after one has landed 
+function spawnNewPiece() {
+    if (player.landed === true) {
+        const newPiece = render(player.matrix, player.pos); 
+        player.landed === false;
+    }
+}; 
 
 
 
