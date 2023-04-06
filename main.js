@@ -2,6 +2,7 @@
 const game = document.getElementById('game'); 
 const ctx = game.getContext('2d'); 
 
+
 //setting up the pieces 
 let piece1; 
 let piece2; 
@@ -11,16 +12,16 @@ let piece4;
 //main event listener
 window.addEventListener('DOMContentLoaded', function() {
 
-    piece1 = new tetrimino(200, 10, 30, 30); 
 
     const runGame = setInterval(gameLoop, 60); 
-    const pieceFunction = setInterval(scrollPiece, 60); 
+    // const pieceFunction = setInterval(scrollPiece, 60); 
     
 
 })
 
 game.setAttribute('height', getComputedStyle(game)['height']); 
 game.setAttribute('width', getComputedStyle(game)['width']); 
+
 
 //random color operations 
 const colorIndex = ['#c92a2a', 'white']; 
@@ -29,37 +30,82 @@ let randomColor = colorIndex[randomIndex];
 
 console.log(randomColor); 
 
-class tetrimino {
-    constructor(x, y, width, height) {
+// class tetrimino {
+//     constructor(x, y, width, height) {
 
-        this.x = x; 
-        this.y = y; 
-        this.width = width; 
-        this.height = height; 
-        this.landed = false; 
-        this.alive = true; 
-        this.render = function() {
+//         this.x = x; 
+//         this.y = y; 
+//         this.width = width; 
+//         this.height = height; 
+//         this.landed = false; 
+//         this.alive = true; 
+//         this.render = function() {
 
-            ctx.strokeStyle = randomColor; 
-            ctx.strokeRect(this.x, this.y, this.width, this.height); 
+//             ctx.strokeStyle = randomColor; 
+//             ctx.strokeRect(this.x, this.y, this.width, this.height); 
+//         }
+
+//     }
+// }
+
+//creating the pieces 
+const tMatrix = [
+    [0, 0, 0],
+    [1, 1, 1],
+    [0, 1, 0],
+]; 
+
+const zigMatrix = [
+    [0, 1, 0],
+    [1, 1, 0], 
+    [1, 0, 0],
+]; 
+
+const zagMatrix = [
+    [0, 1, 0], 
+    [0, 1, 1], 
+    [0, 0, 1],
+]; 
+
+const sqMatrix = [
+    [1, 1, 0], 
+    [1, 1, 0],
+    [0, 0, 0],
+];
+
+function render(matrix) {
+    matrix.forEach((row, y) => {
+    row.forEach((value, x) => {
+        if (value !== 0) {
+            ctx.strokeStyle = randomColor;
+            ctx.strokeRect(x * 30 + 200, y * 30 + 10, 30, 30);  
+          
         }
-
-    }
+    }); 
+}); 
 }
+
+
+const piecesArray = [
+    tMatrix, 
+]; 
+
+console.log(piecesArray); 
 
 function gameLoop() {
 
     ctx.clearRect(0, 0, game.width, game.height); 
 
-    piece1.render(); 
+    render(sqMatrix);  
 
     document.addEventListener('keydown', movementHandler); 
 }
 
-//auto-scrolling and border hit detection
-function scrollPiece() {
+// auto-scrolling and border hit detection
+function scrollPiece(arr) {
 
-    piece1.y += 3; 
+    for (let i = 0; i < arr.length; i++){
+    arr[i].y += 3; 
 
     if (piece1.x < 0) {
         piece1.x = 0 + 2;
@@ -74,6 +120,7 @@ function scrollPiece() {
         piece1.y = game.height - (piece1.height + 2);
         piece1.landed = true; 
       }
+}
 }
 
 // =================MOVEMENT HANDLER======================== //
