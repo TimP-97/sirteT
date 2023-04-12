@@ -46,6 +46,7 @@ function merge(board, player) {
             } else if (value !== 0 && value !==1){
                 board[y][x] = value; 
             }
+            console.table(board); 
         }); 
     }); 
 }
@@ -150,10 +151,10 @@ function gameLoop() {
 
     currentPiece.render(player.matrix, player.pos); 
     
-    if(player.landed) {
-        spawnNewPiece(); 
-        newPiece.render(player.matrix, player.pos); 
-    }
+    // if(player.landed) {
+    //     spawnNewPiece(player.matrix, player.pos); 
+        
+    // }
 
     document.addEventListener('keydown', movementHandler); 
 
@@ -205,7 +206,7 @@ function movementHandler(e){
 };        
 
 //rotating the pieces 90 degrees 
-function rotate(matrix, direction) {
+function rotate(matrix) {
     for (let y = 0; y < matrix.length; y++) {
         for (let x = 0; x < y; x++) {
             [
@@ -219,11 +220,9 @@ function rotate(matrix, direction) {
         }
     }
 
-    if (direction > 0) {
-        matrix.forEach(row => row.reverse)
-    } else {
-        matrix.reverse(); 
-    }
+   
+    matrix.reverse(); 
+   
 }
 
 
@@ -231,8 +230,8 @@ function rotate(matrix, direction) {
 // spawning in a new piece after one has landed 
 function spawnNewPiece() {
    player.landed = false; 
-   newPiece = new gamePiece(player.matrix, {x: 180, y:10}); 
-   newPiece.render(); 
+   newPiece = new gamePiece(player.matrix, player.pos); 
+   newPiece.render(player.matrix, player.pos); 
    return true; 
    
 }; 
