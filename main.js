@@ -1,5 +1,7 @@
 //===============HTML ELEMENTS======================
-
+let gameState = "paused"; 
+const playButton = document.getElementById('play-button'); 
+const learnButton = document.getElementById('learn-button'); 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
@@ -156,6 +158,7 @@ function playerMove(direction) {
     }
 }
 
+//resets the pieces and checks for collision if piece is 
 function pieceReset() {
     player.matrix = piecesArray[Math.floor(Math.random() * (piecesArray.length))];
     player.pos.y = 0;
@@ -173,6 +176,10 @@ function resetBoard() {
     updateScore();
     console.log('board reset'); 
 }
+
+// function gameOver() {
+
+// }
 
 //function that reverses the matrix and rotates 90 degrees 
 function rotate(matrix) {
@@ -228,7 +235,7 @@ let dropCounter = 0;
 let dropInterval = 500;
 
 let lastTime = 0;
-function update(time = 0) {
+function gameLoop(time = 0) {
     const deltaTime = time - lastTime;
 
     dropCounter += deltaTime;
@@ -240,7 +247,7 @@ function update(time = 0) {
     lastTime = time;
 
     draw();
-    requestAnimationFrame(update);
+    requestAnimationFrame(gameLoop);
 }
 
 
@@ -257,4 +264,11 @@ const player = {
 
 pieceReset();
 updateScore();
-update();
+gameLoop();
+
+//============UI ELEMENTS==============
+
+playButton.addEventListener('onclick', function() {
+    gameState = 'play'; 
+    playGame(); 
+})
