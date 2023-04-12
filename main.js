@@ -265,18 +265,29 @@ const player = {
     score: 0,
 };
 
+function runGame() {
+gameState = 'playing'
+if (gameState === 'playing') {
 pieceReset();
 updateScore();
 gameLoop();
-
+console.log('is game running?'); 
+}
+}; 
 //============UI ELEMENTS==============
 
 learnButton.addEventListener('click', () => {
     rulesDisplay.style.display = "inline"; 
+    gameState === 'paused'; 
 
     closeButton.addEventListener('click', () => {
         rulesDisplay.style.display = 'none';
+        gameState === 'playing'; 
     })
 
-    
+    return gameState; 
+})
+
+playButton.addEventListener('click', () => {
+    runGame(); 
 })
