@@ -8,6 +8,9 @@ const closeButton = document.getElementById('close-button');
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
+game.setAttribute('height', getComputedStyle(game)['height']);
+game.setAttribute('width', getComputedStyle(game)['width']);
+
 //==============CREATING THE BOARD=================
 context.scale(33, 33);
 
@@ -139,27 +142,10 @@ function recordPosition(board, player) {
             }
         });
     });
+    console.log('record position'); 
 }
 
 
-function playerDrop() {
-    player.pos.y++;
-    if (collide(board, player)) {
-        player.pos.y--;
-        recordPosition(board, player);
-        pieceReset();
-        clearRow();
-        updateScore();
-    }
-    dropCounter = 0;
-}
-
-function playerMove(direction) {
-    player.pos.x += direction;
-    if (collide(board, player)) {
-        player.pos.x -= direction;
-    }
-}
 
 //resets the pieces and checks for collision if piece is 
 function pieceReset() {
@@ -180,9 +166,25 @@ function resetBoard() {
     console.log('board reset'); 
 }
 
-// function gameOver() {
+//drops the player 1 position down every second
+function playerDrop() {
+    player.pos.y++;
+    if (collide(board, player)) {
+        player.pos.y--;
+        recordPosition(board, player);
+        pieceReset();
+        clearRow();
+        updateScore();
+    }
+    dropCounter = 0;
+}
 
-// }
+function playerMove(direction) {
+    player.pos.x += direction;
+    if (collide(board, player)) {
+        player.pos.x -= direction;
+    }
+}
 
 //function that reverses the matrix and rotates 90 degrees 
 function rotate(matrix) {
@@ -204,15 +206,15 @@ function rotate(matrix) {
 }
 
 //rotating the player and checking to see if rotating will move it out of the board
-function playerRotate(dir) {
+function playerRotate(direction) {
     const pos = player.pos.x;
     let offset = 1;
-    rotate(player.matrix, dir);
+    rotate(player.matrix, direction);
     while (collide(board, player)) {
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > player.matrix[0].length) {
-            rotate(player.matrix, -dir);
+            rotate(player.matrix, -direction);
             player.pos.x = pos;
             return;
         }
