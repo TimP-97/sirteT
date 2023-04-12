@@ -16,7 +16,7 @@ The project is still a work in progress. To play the current version, vist: http
 # Objectives:
  Fill the rows with blocks in order to score points. Each row cleared will net you 100 points. The game ends when the game board is filled up and reaches the top of the screen. 
 
-![Alt text](https://i.imgur.com/XepGScP.png)
+![Alt text](resources/game-screenshot.png)
 
 # Design
 
@@ -82,7 +82,7 @@ function draw() {
 
 //this draw() function also clears the board so that we aren't getting duplicated pieces and draws the pieces that have been recorded on the board!
 ```
-Then, we have the collide function, which takes the piece array and board array and merges the pieces together on the board 
+Then, we have the collide function, which will detect whether or not the piece has exceeded the board's boundaries
 
 ```
 function collide(board, player) {

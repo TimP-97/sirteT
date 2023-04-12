@@ -49,7 +49,7 @@ function clearRow() {
 }
 
 //checks to see if the pieces landed on the board or not
-function collide(board, player) {
+function collisionDetection(board, player) {
     const m = player.matrix;
     const o = player.pos;
     for (let y = 0; y < m.length; ++y) {
@@ -153,7 +153,7 @@ function pieceReset() {
     player.pos.y = 0;
     player.pos.x = (board[0].length / 2 | 0) -
                    (player.matrix[0].length / 2 | 0);
-    if (collide(board, player)) {
+    if (collisionDetection(board, player)) {
         resetBoard(); 
     }
      
@@ -169,7 +169,7 @@ function resetBoard() {
 //drops the player 1 position down every second
 function playerDrop() {
     player.pos.y++;
-    if (collide(board, player)) {
+    if (collisionDetection(board, player)) {
         player.pos.y--;
         recordPosition(board, player);
         pieceReset();
@@ -181,7 +181,7 @@ function playerDrop() {
 
 function playerMove(direction) {
     player.pos.x += direction;
-    if (collide(board, player)) {
+    if (collisionDetection(board, player)) {
         player.pos.x -= direction;
     }
 }
@@ -210,7 +210,7 @@ function playerRotate(direction) {
     const pos = player.pos.x;
     let offset = 1;
     rotate(player.matrix, direction);
-    while (collide(board, player)) {
+    while (collisionDetection(board, player)) {
         player.pos.x += offset;
         offset = -(offset + (offset > 0 ? 1 : -1));
         if (offset > player.matrix[0].length) {
