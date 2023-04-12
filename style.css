@@ -69,10 +69,12 @@ main {
     margin-top: 75px; 
 } 
 
+
 #game {
 
     border: 4px solid white; 
     border-radius: 12px;
+    display: grid;
 }
 
 
