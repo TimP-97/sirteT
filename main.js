@@ -1,7 +1,10 @@
 //===============HTML ELEMENTS======================
 let gameState = "paused"; 
+
 const playButton = document.getElementById('play-button'); 
 const learnButton = document.getElementById('learn-button'); 
+const rulesDisplay = document.getElementById('instructions'); 
+const closeButton = document.getElementById('close-button'); 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
@@ -268,7 +271,12 @@ gameLoop();
 
 //============UI ELEMENTS==============
 
-playButton.addEventListener('onclick', function() {
-    gameState = 'play'; 
-    playGame(); 
+learnButton.addEventListener('click', () => {
+    rulesDisplay.style.display = "inline"; 
+
+    closeButton.addEventListener('click', () => {
+        rulesDisplay.style.display = 'none';
+    })
+
+    
 })

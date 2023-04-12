@@ -112,6 +112,35 @@ h1 {
   
 }
 
+#instructions {
+  display: none;
+  position: absolute; 
+  background-color: #ffffff;
+  width: 400px; 
+  height: 660px; 
+  margin-top: -675px; 
+  margin-left: -185px;
+}
+
+p {
+  font-family: 'Permanent Marker', cursive;
+  color: black; 
+}
+
+#close-button {
+  background-color: black;
+  color: white;
+  font-size: 10px;
+  font-family: 'Permanent Marker', cursive;
+  
+}
+
+#close-button:hover {
+  background-color: white;
+  color: black; 
+  
+}
+
 
 
 
