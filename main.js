@@ -36,6 +36,8 @@ function clearRow() {
         player.score += rowCount * 100;
         rowCount *= 2;
     }
+
+    console.log('clear row'); 
 }
 
 //checks to see if the pieces landed on the board or not
@@ -140,14 +142,37 @@ function playerDrop() {
     if (collide(board, player)) {
         player.pos.y--;
         recordPosition(board, player);
-        reset();
+        pieceReset();
         clearRow();
         updateScore();
     }
     dropCounter = 0;
 }
 
+function playerMove(direction) {
+    player.pos.x += direction;
+    if (collide(board, player)) {
+        player.pos.x -= direction;
+    }
+}
 
+function pieceReset() {
+    player.matrix = piecesArray[Math.floor(Math.random() * (piecesArray.length))];
+    player.pos.y = 0;
+    player.pos.x = (board[0].length / 2 | 0) -
+                   (player.matrix[0].length / 2 | 0);
+    if (collide(board, player)) {
+        resetBoard(); 
+    }
+     
+}
+
+function resetBoard() {
+    board.forEach(row => row.fill(0));
+    player.score = 0;
+    updateScore();
+    console.log('board reset'); 
+}
 
 //function that reverses the matrix and rotates 90 degrees 
 function rotate(matrix) {
@@ -230,6 +255,6 @@ const player = {
     score: 0,
 };
 
-reset();
+pieceReset();
 updateScore();
 update();
