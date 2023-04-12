@@ -82,10 +82,10 @@ function draw() {
 
 //this draw() function also clears the board so that we aren't getting duplicated pieces and draws the pieces that have been recorded on the board!
 ```
-Then, we have the collide function, which will detect whether or not the piece has exceeded the board's boundaries
+Then, we have the collisionDetection function, which will detect whether or not the piece has exceeded the board's boundaries
 
 ```
-function collide(board, player) {
+function collisionDetection(board, player) {
     const m = player.matrix;
     const o = player.pos;
     for (let y = 0; y < m.length; ++y) {
