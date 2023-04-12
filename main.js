@@ -12,16 +12,15 @@ const ctx = game.getContext('2d');
 // let winCondition = false; 
 // let loseCondition = false; 
 let currentPiece; 
-let newPiece; 
+
 
 //=================== CREATING THE BOARD ==================//
 window.addEventListener('DOMContentLoaded', function() {
 
     currentPiece = new gamePiece(player.matrix, player.pos); 
-    newPiece = new gamePiece(player.matrix, player.pos); 
 
     const runGame = setInterval(gameLoop, 60); 
-    const pieceFunction = setInterval(scrollPiece, 60); 
+    // const pieceFunction = setInterval(scrollPiece, 60); 
     
 
 })
@@ -38,17 +37,19 @@ function createBoard(width, height) {
 
 let board = createBoard(10, 20); 
 
-function merge(board, player) {
-    player.matrix.forEach((row, y) => {
-        row.forEach((value, x) => {
-            if (value !== 0 && value !== 2){
-                board[y][x] = value; 
-            } else if (value !== 0 && value !==1){
-                board[y][x] = value; 
+function collide(board, player) {
+    const m = player.matrix;
+    const o = player.pos;
+    for (let y = 0; y < m.length; ++y) {
+        for (let x = 0; x < m[y].length; ++x) {
+            if (m[y][x] !== 0 &&
+               (board[y + o.y] &&
+                board[y + o.y][x + o.x]) !== 0) {
+                return true;
             }
-            console.table(board); 
-        }); 
-    }); 
+        }
+    }
+    return false;
 }
 
 
@@ -138,7 +139,6 @@ class gamePiece {
     }
 }
 
-//creating the game board with a function 
 
 
 
@@ -150,11 +150,15 @@ function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);  
 
     currentPiece.render(player.matrix, player.pos); 
+    console.log('current Piece:', currentPiece); 
+    console.log('player:', player); 
+    scrollPiece(); 
     
-    // if(player.landed) {
-    //     spawnNewPiece(player.matrix, player.pos); 
-        
-    // }
+    if(player.landed) {
+        let newPiece = spawnNewPiece(); 
+        console.log('player landed?', player.landed);
+        newPiece.render(player.matrix, player.pos)
+    }
 
     document.addEventListener('keydown', movementHandler); 
 
@@ -178,7 +182,7 @@ function scrollPiece() {
         player.pos.y = game.height - (player.height + 2);
         player.landed = true; 
         merge(board, player); 
-        console.log('player landed?', player.landed); 
+         
       }
 
 
@@ -228,11 +232,14 @@ function rotate(matrix) {
 
 
 // spawning in a new piece after one has landed 
-function spawnNewPiece() {
+function spawnNewPiece() { 
    player.landed = false; 
-   newPiece = new gamePiece(player.matrix, player.pos); 
-   newPiece.render(player.matrix, player.pos); 
-   return true; 
+//    player.matrix = piecesArray[Math.floor(Math.random() * (piecesArray.length))]; 
+   player.pos = {x: 5, y: 5}; 
+   return new gamePiece(piecesArray[Math.floor(Math.random() * (piecesArray.length))], player.pos); 
+//    currentPiece.render(player.matrix, player.pos); 
+   
+   
    
 }; 
 
