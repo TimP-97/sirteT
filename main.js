@@ -48,7 +48,7 @@ function clearRow() {
     console.log('clear row'); 
 }
 
-//checks to see if the pieces landed on the board or not
+//checks to see if the pieces have collided with the edge of the board
 function collisionDetection(board, player) {
     const m = player.matrix;
     const o = player.pos;
