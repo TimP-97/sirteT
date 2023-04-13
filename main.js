@@ -148,7 +148,7 @@ function recordPosition(board, player) {
 
 
 
-//resets the pieces and checks for collision if piece is 
+//resets the pieces and checks for collision if piece it as at the top of the board 
 function pieceReset() {
     player.matrix = piecesArray[Math.floor(Math.random() * (piecesArray.length))];
     player.pos.y = 0;
