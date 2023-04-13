@@ -18,6 +18,10 @@ The project is still a work in progress. To play the current version, vist: http
 
 ![Alt text](resources/game-screenshot.png)
 
+Fail State 
+
+![Alt text](resources/failstate-screenshot.png)
+
 # Design
 
 sirteT only uses 5 different pieces, and has intentionally removed certain pieces classic to Tetris. At the end of the project, the goal will be to fill the board with as many pieces as possible without clearing rows or matching three adjacent colors vertically or horizontally 

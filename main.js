@@ -5,6 +5,7 @@ const playButton = document.getElementById('play-button');
 const learnButton = document.getElementById('learn-button'); 
 const rulesDisplay = document.getElementById('instructions'); 
 const closeButton = document.getElementById('close-button'); 
+const gameOverScreen = document.getElementById('game-over'); 
 const canvas = document.getElementById('game');
 const context = canvas.getContext('2d');
 
@@ -154,6 +155,7 @@ function pieceReset() {
     player.pos.x = 2;
     if (collisionDetection(board, player)) {
         resetBoard(); 
+        pauseGame(); 
     }
      
 }
@@ -178,6 +180,7 @@ function playerDrop() {
     dropCounter = 0;
 }
 
+//allows you to move the player left or right depending on the direction
 function playerMove(direction) {
     player.pos.x += direction;
     if (collisionDetection(board, player)) {
@@ -236,7 +239,7 @@ document.addEventListener('keydown', e => {
 
 //automatic dropping of the piece on a set interval
 let dropCounter = 0;
-let dropInterval = 500;
+let dropInterval = 300;
 
 let lastTime = 0;
 function gameLoop(time = 0) {
@@ -274,6 +277,11 @@ updateScore();
 gameLoop();
 console.log('is game running?'); 
 }
+function pauseGame() {
+    gameOverScreen.style.display = "inline";
+    gameState === "paused"; 
+    return gameState; 
+}
 }; 
 //============UI ELEMENTS==============
 
@@ -290,5 +298,6 @@ learnButton.addEventListener('click', () => {
 })
 
 playButton.addEventListener('click', () => {
+
     runGame(); 
 })
