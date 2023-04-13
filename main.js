@@ -151,8 +151,7 @@ function recordPosition(board, player) {
 function pieceReset() {
     player.matrix = piecesArray[Math.floor(Math.random() * (piecesArray.length))];
     player.pos.y = 0;
-    player.pos.x = (board[0].length / 2 | 0) -
-                   (player.matrix[0].length / 2 | 0);
+    player.pos.x = 2;
     if (collisionDetection(board, player)) {
         resetBoard(); 
     }
