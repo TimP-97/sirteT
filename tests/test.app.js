@@ -10,7 +10,7 @@ describe('createBoard()', function(){
 
 })
 
-describe('collide()', function(){
+describe('collisionDetection()', function(){
     it('should return false if the player.position does not match board.length', function() {
         let board = createBoard(10, 10); 
         const player = {
