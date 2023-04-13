@@ -46,10 +46,8 @@ const tPiece = [
 
 (NOTE: The extra rows of zeroes is necessary for piece rotation!);
 ```
-
- Then, a seperate drawMatrix function loops through both of the arrays with a for each loop, then using a 2D canvas, draws images based off of inputs. 
-
-In order to have logic that knows when a piece has landed at the bottom of the array or has collided with another piece, we have the detect position function. 
+ 
+In order to have logic that knows when a piece has landed at the bottom of the array or has collided with another piece, we have the recordPosition()function. 
 
 ```
 function recordPosition(board, player) {
@@ -65,7 +63,8 @@ function recordPosition(board, player) {
 ```
 This function records the values on the player.matrix, which is represented by the piece, and records that information on board array. 
 
-Then, we redraw the piece on the array so that we can determine it's more permanenet "settled" state. 
+Then, a seperate drawMatrix function loops through both of the arrays with a for each loop, then using a 2D canvas, draws images based off of items in the array.
+ We redraw the piece on the array so that we can determine it's more permanenet "settled" state. 
 ```
 function drawMatrix(matrix, offset) {
     matrix.forEach((row, y) => {
